@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+<title>MTE Insert Controller</title>
+<link rel="stylesheet" href="../css/common.css" />
+<style>
+table , input , textarea , select {
+	font-size: 16px;
+	}
+table {
+	border-collapse: collapse; 
+/*	border-collapse: separate; */
+	border: 1px solid #808080;
+	width: 100%; 
+	}
+input {
+	border: 1px solid #808080;
+	font-size: 18px;
+	}
+input[type="number" i] {
+	width: 100px;
+	}	
+textarea {
+	resize: vertical;
+	word-break: break-all;
+	padding: 2px;
+	font-weight: bold;
+	width: 99%; 
+	}
+tbody {
+	margin: 5px;
+	}
+tbody > tr {
+	margin: 0px 5px;
+	padding: 5px;
+	}
+tbody > tr > th {
+	width: 35%;
+	margin: 0; 	padding: 0;
+	text-align: right;
+	}
+tbody > tr > th.head {
+	text-align: left;
+	line-height: 100%;
+	color: #0000ff;
+	}
+tbody > tr > td {
+	width: 65%;
+	margin: 0px;
+	padding: 0px;
+	}
+td {
+	width: 65%;
+	margin: 0px; 
+	padding: 0px;
+	}
+
+.mte_info {
+	width: 48%;
+	display: inline-block;
+	}
+
+.insert_btn_info {
+	font-size: 22px;
+	padding: 0px 5px;
+	margin: 3px 0px;
+	background-color:#00f080; 
+	}
+.post_btn_info:active {
+	background-color:#f0f020;
+	}
+.post_btn_tune {
+	font-size: 24px;
+	padding: 5px;
+	margin: 5px 0px;
+	background-color:#ff8080;
+	}
+.post_btn_tune:active {
+	background-color:#f0f020;
+	}
+.post_btn_emg {
+	font-size: 24px;
+	padding: 5px;
+	margin: 5px 0px;
+	background-color:#a0a0ff;
+	}
+.post_btn_emg:active {
+	background-color:#f0f020;
+	}
+.main {
+	width: 100%;
+	float: left;
+	margin: 5px auto;
+	}
+.inputarea {
+	padding: 0px 0px 0px 3px;
+	border: 1px solid #000000;
+	background-color:#ffffff;
+	}
+	
+.title_a {
+	font-size: 22px;
+	font-weight: bold;
+	margin: 5px 0px 0px 0px ;
+	}
+.title_b {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 0px ;
+	text-align: left;
+	float: left;
+	}
+.title_c {
+	font-size: 20px;
+	font-weight: bold;
+	}
+.event_area {
+	padding: 5px;
+	border: 1px solid #000000;
+	}
+.insertion_method {
+	display: float;
+	}
+.insert_btn {
+	margin: -15px 10px 0px 0px;
+	text-align: right;
+	}
+
+.area1 {
+	padding: 5px;
+	margin: 0px;
+	border: 2px solid #a0a0ff;
+	background-color: #fcfcff;
+	}
+.table_ins_method {
+	border: 0px; 
+	}
+
+</style>
+</head>
+<body>
+<div class="title_a">MTE 挿入コントローラ(Media Timed Event Insert Controller)</div>
+<div class="main">
+	<div class="mte_info">
+		<div class="title_c">Event Message Box(in-band)</div>
+		<div class="area1">
+			<table class="table_ins_method"><tbody>
+				<tr><th class="head">Insertion Method</th><th></th></tr>
+				<tr><th>挿入方法:</th><td>
+					<input type="radio" name="emsg_method" id="emsg_method" value="A" checked="checked">A:1回のみ
+					<input type="radio" name="emsg_method" id="emsg_method" value="B">B:連続挿入
+					<input type="radio" name="emsg_method" id="emsg_method" value="C">C:セグメント挿入(RelayMiffe内)
+				</td></tr>
+				<tr><th>B:連続挿入間隔/期間(msec):</th><td><input type="number" name="emsg_b_interval" id="emsg_b_interval" size="3" maxlength="6">／<input type="number" name="emsg_b_duration" id="emsg_b_duration" size="3" maxlength="6"></td></tr>
+				<tr><th>C:セグメント挿入期間(msec):</th><td><input type="number" name="emsg_c_duration" id="emsg_c_duration" size="3" maxlength="6"></td></tr>
+			</tbody></table>
+			<div class="insert_btn"><button type="button" class="insert_btn_info" onclick="emsg_insert();">MTE挿入</button></div>
+
+			<div class="title_b">MTE情報</div>
+			<table><tbody>
+				<tr><th class="head">EMSG Data</th><th></th></tr>
+				<tr><th>scheme_id_uri:</th><td><input type="string" name="emsg_scheme_id_uri" id="emsg_scheme_id_uri" size="30"　maxlength="100" value="urn:scte:scte35:2013:xml"></td></tr>
+				<tr><th>value:</th><td><input type="string" name="emsg_value" id="emsg_value" size="20" maxlength="20" value="999"></td></tr>
+				<tr><th>timescale:</th><td><input type="number" name="emsg_timescale" id="emsg_timescale" size="10" maxlength="10" value="1"></td></tr>
+			</tbody></table>
+			<table><tbody>
+				<tr><th class="head">Event:</th><th></th></tr>
+				<tr><th>version:</th><td><input type="number" name="emsg_ev_version" id="emsg_ev_version" size="1" maxlength="1" min="0" max="1" value="0">　(0または1)</td></tr>
+				<tr><th>flags:</th><td><input type="number" name="emsg_ev_flags" id="emsg_ev_flags" size="4" maxlength="4" value="0"></td></tr>
+				<tr><th>presentation_time(_delta):</th><td><input type="number" name="emsg_ev_presentation_time" id="emsg_ev_presentation_time" size="20" maxlength="20"  value="900000"></td></tr>
+				<tr><th>event_duration:</th><td><input type="number" name="emsg_ev_duration" id="emsg_ev_duration" size="10" maxlength="10" value="900000"></td></tr>
+				<tr><th>id:</th><td><input type="number" name="emsg_ev_id" id="emsg_ev_id" size="10" maxlength="10" value="1">　(自動インクリメント)</td></tr>
+				<tr><th>message_data:</th><td><textarea name="emsg_ev_message_data" id="emsg_ev_message_data" maxlength="1000">Program Info</textarea></td></tr>
+			</tbody></table>
+		</div>
+	</div>
+<!----------->
+	<div class="mte_info">
+		<div class="title_c">MPD Event(out-of-band)</div>
+		<div class="area1">
+			<table class="table_ins_method"><tbody>
+				<tr><th class="head">Insertion Method</th><th></th></tr>
+				<tr><th>挿入方法:</th><td>
+					<input type="radio" name="mpd_method" id="mpd_method" value="A" checked="checked">A:1回のみ
+					<input type="radio" name="mpd_method" id="mpd_method" value="B">B:連続挿入
+					<input type="radio" name="mpd_method" id="mpd_method" value="C">C:セグメント挿入(RelayMiffe内)
+				</td></tr>
+				<tr><th>B:連続挿入間隔/期間(msec):</th><td><input type="number" name="mpd_b_interval" id="mpd_b_interval" size="3" maxlength="5">／<input type="number" name="mpd_b_duration" id="mpd_b_duration" size="3" maxlength="5"></td></tr>
+				<tr><th>C:セグメント挿入期間(msec):</th><td><input type="number" name="mpd_c_duration" id="mpd_c_duration" size="3" maxlength="5"></td></tr>
+			</tbody></table>
+			<div class="insert_btn"><button type="button" class="insert_btn_info" onclick="mpd_insert();">MTE挿入</button></div>
+
+			<div class="title_b">MTE情報</div>
+			<table><tbody>
+				<tr><th class="head">EventStream Data</th><th></th></tr>
+				<tr><th>schemeIdUri:</th><td><input type="string" name="mpd_scheme_id_uri" id="mpd_scheme_id_uri" size="30" maxlength="100" value="urn:scte:scte35:2013:xml"></td></tr>
+				<tr><th>value:</th><td><input type="string" name="mpd_value" id="mpd_value" size="20" maxlength="20" value="999"></td></tr>
+				<tr><th>timescale:</th><td><input type="number" name="mpd_timescale" id="mpd_timescale" size="10" maxlength="10" value="1"></td></tr>
+				<tr><th>xlink:href:</th><td><input type="string" name="mpd_href" id="mpd_href" size="20" maxlength="100" value=""></td></tr>
+				<tr><th>xlink:actuate:</th><td><select id="mpd_actuate" name="mpd_actuate">
+					<option value="onLoad">onLoad</option>
+					<option value="onRequest">onRequest</option>
+				</select>　(xlink:hrefが設定された時のみ有効)</td></tr>
+			</tbody></table>
+
+			<div class="event_area">
+				<table><tbody>
+					<tr><th class="head">Event 1:</th><th></th></tr>
+					<tr><th>presentationTime:</th><td><input type="number" name="mpd_ev1_presentation_time" id="mpd_ev1_presentation_time" size="20" maxlength="20"  value="900000"></td></tr>
+					<tr><th>duration:</th><td><input type="number" name="mpd_ev1_duration" id="mpd_ev1_duration" size="10" maxlength="10" value="900000"></td></tr>
+					<tr><th>id:</th><td><input type="number" name="mpd_ev1_id" id="mpd_ev1_id" size="10" maxlength="10" value="1"></td></tr>
+					<tr><th>messageData:</th><td><textarea name="mpd_ev1_message_data" id="mpd_ev1_message_data" maxlength="1000">Program Info</textarea></td></tr>
+				</tbody></table>
+				<table><tbody>
+					<tr><th class="head">Event 2:</th><th></th></tr>
+					<tr><th>presentationTime:</th><td><input type="number" name="mpd_ev2_presentation_time" id="mpd_ev2_presentation_time" size="20" maxlength="20"  value="900000"></td></tr>
+					<tr><th>duration:</th><td><input type="number" name="mpd_ev2_duration" id="mpd_ev2_duration" size="10" maxlength="10" value="900000"></td></tr>
+					<tr><th>id:</th><td><input type="number" name="mpd_ev2_id" id="mpd_ev2_id" size="10" maxlength="10" value="1"></td></tr>
+					<tr><th>messageData:</th><td><textarea name="mpd_ev2_message_data" id="mpd_ev2_message_data" maxlength="1000">Program Info</textarea></td></tr>
+				</tbody></table>
+				<table><tbody>
+					<tr><th class="head">Event 3:</th><th></th></tr>
+					<tr><th>presentationTime:</th><td><input type="number" name="mpd_ev3_presentation_time" id="mpd_ev3_presentation_time" size="20" maxlength="20"  value="900000"></td></tr>
+					<tr><th>duration:</th><td><input type="number" name="mpd_ev3_duration" id="mpd_ev3_duration" size="10" maxlength="10" value="900000"></td></tr>
+					<tr><th>id:</th><td><input type="number" name="mpd_ev3_id" id="mpd_ev3_id" size="10" maxlength="10" value="1"></td></tr>
+					<tr><th>messageData:</th><td><textarea name="mpd_ev3_message_data" id="mpd_ev3_message_data" maxlength="1000">Program Info</textarea></td></tr>
+				</tbody></table>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="../js/mteinserter.js"></script>
+</body>
+</html>

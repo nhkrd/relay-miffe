@@ -1,0 +1,20 @@
+{
+    "control": {
+        "target": "emsg", 
+        "method": "A", 
+        "b_interval": "", 
+        "b_duration": "", 
+        "c_duration": ""
+    },
+    "emsg": {
+        "scheme_id_uri": "urn:scte:scte35:2013:xml",
+        "value": "999",
+        "timescale": 1,
+        "ev_version": 0,
+        "ev_flags": 0,
+        "ev_presentation_time": 900000,
+        "ev_duration": 900000,
+        "ev_id": 1,
+        "ev_message_data": [80, 114, 111, 103, 114, 97, 109, 32, 73, 110, 102, 111]
+    }
+}

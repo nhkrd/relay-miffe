@@ -1,0 +1,24 @@
+{
+    "control": {
+        "target": "mpd",
+        "method": "A",
+        "b_interval": "",
+        "b_duration": "",
+        "c_duration": ""
+    },
+    "emsg": {
+        "scheme_id_uri": "urn:scte:scte35:2013:xml",
+        "value": "999",
+        "timescale": "1",
+        "href": "",
+        "actuate": "onLoad",
+        "event": [
+            {
+                "ev_presentation_time": 900000,
+                "ev_duration": 900000,
+                "ev_id": 8,
+                "ev_message_data": "Program Info"
+            }
+        ]
+    }
+}
